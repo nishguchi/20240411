@@ -14,19 +14,19 @@
                 If judge = True Then
                     Label2.Text = Integer.Parse(numBox1.Text) + Integer.Parse(numBox2.Text)
                 Else
-                    textWords()
+                    'textWords()
                 End If
             Case "-"
                 If judge = True Then
                     Label2.Text = Integer.Parse(numBox1.Text) - Integer.Parse(numBox2.Text)
                 Else
-                    textWords()
+                    'textWords()
                 End If
             Case "*"
                 If judge = True Then
                     Label2.Text = Integer.Parse(numBox1.Text) * Integer.Parse(numBox2.Text)
                 Else
-                    textWords()
+                    'textWords()
                 End If
             Case "/"
                 If judge = True Then
@@ -45,13 +45,23 @@
         Dim num As Integer
 
         Label3.Text = ""
+
         '文字変換判定
+        If Integer.TryParse(numBox1.Text, num) = False And Integer.TryParse(numBox2.Text, num) = False Then
+            textWords()
+            Return False
+        End If
+
         If Integer.TryParse(numBox1.Text, num) = False Then
+            textWords()
             Return False
         End If
         If Integer.TryParse(numBox2.Text, num) = False Then
+            textWords()
             Return False
         End If
+
+
 
 
         If Integer.Parse(numBox1.Text) < 0 And Integer.Parse(numBox2.Text) < 0 Then
@@ -71,21 +81,28 @@
             Return False
         End If
 
+
+
         '変換可
         Return True
     End Function
 
 
     Private Sub textWords()
+
+        '空か判定
+        If numBox1.Text = "" Or numBox2.Text = "" Then
+            Label3.Text = "入力値が空です"
+            'メソッドを抜ける
+            Exit Sub
+        End If
+
         '数字同士以外の組み合わせ
         '文字列連結
         Label2.Text = numBox1.Text + numBox2.Text
         Label3.Text = "入力値が数字ではありません"
 
-        '空か判定
-        If numBox1.Text = "" Or numBox2.Text = "" Then
-            Label3.Text = "入力値が空です"
-        End If
     End Sub
+
 
 End Class
