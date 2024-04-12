@@ -9,32 +9,33 @@
     Private Sub calcButton_Click(sender As Object, e As EventArgs) Handles calcButton.Click
         Dim judge As Boolean = True
         judge = textAdd()
-
         Select Case ComboBox1.SelectedItem
             Case "+"
                 If judge = True Then
                     Label2.Text = Integer.Parse(numBox1.Text) + Integer.Parse(numBox2.Text)
                 Else
-                    Label2.Text = numBox1.Text + numBox2.Text
+                    textWords()
                 End If
             Case "-"
                 If judge = True Then
                     Label2.Text = Integer.Parse(numBox1.Text) - Integer.Parse(numBox2.Text)
                 Else
-                    Label2.Text = numBox1.Text + numBox2.Text
+                    textWords()
                 End If
             Case "*"
                 If judge = True Then
                     Label2.Text = Integer.Parse(numBox1.Text) * Integer.Parse(numBox2.Text)
                 Else
-                    Label2.Text = numBox1.Text + numBox2.Text
+                    textWords()
                 End If
             Case "/"
                 If judge = True Then
                     Label2.Text = Integer.Parse(numBox1.Text) / Integer.Parse(numBox2.Text)
                 Else
-                    Label2.Text = numBox1.Text + numBox2.Text
+                    textWords()
                 End If
+            Case ""
+                Label3.Text = "四則演算子を選択してください"
         End Select
 
 
@@ -43,20 +44,30 @@
     Function textAdd()
         Dim num As Integer
 
+        Label3.Text = ""
         '文字変換判定
         If Integer.TryParse(numBox1.Text, num) = False Then
             Return False
         End If
         If Integer.TryParse(numBox2.Text, num) = False Then
-
             Return False
         End If
 
-        If Integer.TryParse(numBox2.Text, num) >= 999 Then
-            Return False
-        End If
 
-        If Integer.TryParse(numBox1.Text, num) >= 999 Then
+        If Integer.Parse(numBox1.Text) < 0 And Integer.Parse(numBox2.Text) < 0 Then
+            numBox1.Text = ""
+            numBox2.Text = ""
+            Label3.Text = "マイナス値は計算できません"
+            Return False
+
+        ElseIf Integer.Parse(numBox1.Text) < 0 Then
+            numBox1.Text = ""
+            Label3.Text = "マイナス値は計算できません"
+            Return False
+
+        ElseIf Integer.Parse(numBox2.Text) < 0 Then
+            numBox2.Text = ""
+            Label3.Text = "マイナス値は計算できません"
             Return False
         End If
 
@@ -64,5 +75,17 @@
         Return True
     End Function
 
+
+    Private Sub textWords()
+        '数字同士以外の組み合わせ
+        '文字列連結
+        Label2.Text = numBox1.Text + numBox2.Text
+        Label3.Text = "入力値が数字ではありません"
+
+        '空か判定
+        If numBox1.Text = "" Or numBox2.Text = "" Then
+            Label3.Text = "入力値が空です"
+        End If
+    End Sub
 
 End Class
