@@ -30,7 +30,7 @@
                 End If
             Case "/"
                 If judge = True Then
-                    Label2.Text = Integer.Parse(numBox1.Text) / Integer.Parse(numBox2.Text)
+                    Label2.Text = Math.Round(Integer.Parse(numBox1.Text) / Integer.Parse(numBox2.Text), 4)
                 Else
                     textWords()
                 End If
